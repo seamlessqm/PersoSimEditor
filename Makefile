@@ -1,9 +1,23 @@
+UNAME := $(shell uname -s)
+
+ifeq ($(UNAME),Linux)
+    EDITOR_BASE = /home/joseph/work/PersoSimEditor
+    PERSOSIM_BASE = /home/joseph/work/PersoSim
+    CP_SEP = :
+else
+    EDITOR_BASE = /c/Users/zozoz/work/PersoSimEditor
+    PERSOSIM_BASE = /c/Users/zozoz/work/PersoSim
+    CP_SEP = ;
+endif
+
 PLATFORM ?= linux
 VERSION ?= 1.0.0
-EDITOR_PLUGINS = /home/joseph/work/PersoSimEditor/$(PLATFORM)/plugins
+
+EDITOR_PLUGINS = $(EDITOR_BASE)/$(PLATFORM)/plugins
 EDITOR_RCP_JAR = $(EDITOR_PLUGINS)/de.persosim.editor.rcp_1.4.0.20251112.jar
 EDITOR_UI_JAR = $(EDITOR_PLUGINS)/de.persosim.editor.ui_1.4.0.20251112.jar
-EDITOR_CLASSPATH = $(EDITOR_PLUGINS)/*:$(EDITOR_PLUGINS)/de.persosim.simulator_1.4.0.20251112
+
+EDITOR_CLASSPATH = $(EDITOR_PLUGINS)/*$(CP_SEP)$(EDITOR_PLUGINS)/de.persosim.simulator_1.4.0.20251112$(CP_SEP)$(EDITOR_UI_JAR)
 
 # Extract patches
 extract-editor-patches:
